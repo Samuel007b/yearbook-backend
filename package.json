@@ -1,0 +1,21 @@
+{
+  "name": "yearbook-backend",
+  "version": "1.0.0",
+  "description": "API REST do Yearbook Digital — IFNMG Salinas 2026",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Samuel007b/yearbook-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Samuel007b/yearbook-backend/issues"
+  },
+  "homepage": "https://github.com/Samuel007b/yearbook-backend#readme"
+}
