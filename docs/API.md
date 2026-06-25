@@ -224,7 +224,7 @@
       {
         "id": 1,
         "texto": "Criação da documentação do Yearbook",
-        "imagemUrl ": "yearbook.png",
+        "imagemUrl": "yearbook.png",
         "criadoEm": "2026-04-03T11:30:00.000Z",
         "autor": {
           "id": 1,
@@ -235,7 +235,7 @@
       {
         "id": 2,
         "texto": "Marcação das provas de WEB",
-        "imagemUrl ": null,
+        "imagemUrl": null,
         "criadoEm": "2026-04-04T21:00:00.000Z",
         "autor": {
           "id": 2,
@@ -246,7 +246,7 @@
       {
         "id": 3,
         "texto": "Seção de fotos das turmas A e B para Yearbook",
-        "imagemUrl ": "fotografia.png",
+        "imagemUrl": "fotografia.png",
         "criadoEm": "2026-04-05T16:00:00.000Z",
         "autor": {
           "id": 3,
@@ -271,7 +271,8 @@
     ```json
     {
       "texto": "Criação da documentação do Yearbook",
-      "imagemUrl ": "yearbook.png"
+      "imagemUrl": "yearbook.png",
+      "autorId": 1
     }
     ```
 
@@ -281,7 +282,7 @@
     {
       "id": 1,
       "texto": "Criação da documentação do Yearbook",
-      "imagemUrl ": "yearbook.png",
+      "imagemUrl": "yearbook.png",
       "criadoEm": "2026-04-03T11:30:00.000Z",
       "autor": {
         "id": 1,
