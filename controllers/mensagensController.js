@@ -16,15 +16,14 @@ export async function listarMensagens(req, res) {
   res.json(mensagens); // retorna a lista com autor embutido
 }
 
-// --- Stubs para o desafio do aluno ---
-
-// 🎯 POST /mensagens — cria uma nova mensagem
-// Siga o mesmo padrão do criarAluno
-// Valide que texto não está vazio (400 se faltar)
+// POST /mensagens — cria uma nova mensagem
 export async function criarMensagem(req, res) {
   const { texto, imagemUrl, autorId } = req.body; // extrai os dados
   if (!texto) {
     return res.status(400).json({ erro: 'O campo texto é obrigatório' }); // invalid → 400
+  }
+  if (!autorId) {
+    return res.status(400).json({ erro: 'O campo autorId é obrigatório' }); // invalid → 400
   }
   const novaMensagem = await prisma.mensagem.create({
     data: {
@@ -36,8 +35,7 @@ export async function criarMensagem(req, res) {
   res.status(201).json(novaMensagem); // created → 201
 }
 
-// 🎯 DELETE /mensagens/:id — deleta uma mensagem
-// Siga o mesmo padrão do deletarAluno
+// DELETE /mensagens/:id — deleta uma mensagem
 export async function deletarMensagem(req, res) {
   const { id } = req.params; // extrai o :id da URL
   try{
