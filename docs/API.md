@@ -309,3 +309,7 @@
     - **Erros:**
       - `401` — Credenciais inválidas (email não existe ou senha incorreta)
       - `403` — Usuário não autorizado (usuário não é administrador)
+
+## CORS
+
+Esta API tem CORS habilitado para qualquer origem. Você pode consumi-la de qualquer domínio (localhost, Vercel, etc.) sem configuração adicional no cliente.
