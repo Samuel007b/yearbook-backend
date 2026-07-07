@@ -15,30 +15,40 @@ const selectSemSenha = {
 };
 
 // GET /alunos — lista todos os alunos
-export async function listarAlunos(req, res) {
-  const alunos = await prisma.aluno.findMany({
-    select: selectSemSenha, // retorna todos os campos EXCETO senhaHash
-  });
-  res.json(alunos); // responde com o array de alunos em JSON
+export async function listarAlunos(req, res, next) {
+  try{
+    const alunos = await prisma.aluno.findMany({
+      select: selectSemSenha, // retorna todos os campos EXCETO senhaHash
+    });
+    res.json(alunos); // responde com o array de alunos em JSON
+  }
+  catch(erro){
+    next(erro);  // passa o erro para o middleware global
+  }
 }
 
 // GET /alunos/:id — busca um aluno pelo ID
-export async function buscarAluno(req, res) {
-  const { id } = req.params; // extrai o :id da URL
-  const aluno = await prisma.aluno.findUnique({
-    where: { id: Number(id) }, // converte string → number
-    select: selectSemSenha,    // omite senhaHash
-  });
-  if (!aluno) {
-    return res.status(404).json({ erro: 'Aluno não encontrado' }); // null → 404
+export async function buscarAluno(req, res, next) {
+  try{
+    const { id } = req.params; // extrai o :id da URL
+    const aluno = await prisma.aluno.findUnique({
+      where: { id: Number(id) }, // converte string → number
+      select: selectSemSenha,    // omite senhaHash
+    });
+    if (!aluno) {
+      return res.status(404).json({ erro: 'Aluno não encontrado' }); // null → 404
+    }
+    res.json(aluno); // retorna o aluno encontrado
   }
-  res.json(aluno); // retorna o aluno encontrado
+  catch(erro){
+    next(erro);  // passa o erro para o middleware global
+  }
 }
 
 // POST /alunos — cria um novo aluno
-export async function criarAluno(req, res) {
-  const { nome, email, senhaHash, cidade, frase, planosFuturos } = req.body; // extrai os dados
+export async function criarAluno(req, res, next) {
   try {
+    const { nome, email, senhaHash, cidade, frase, planosFuturos } = req.body; // extrai os dados
     const novoAluno = await prisma.aluno.create({
       data: {
         nome: nome,
@@ -52,19 +62,16 @@ export async function criarAluno(req, res) {
     });
     res.status(201).json(novoAluno); // created → 201
   }
-  catch(error){
-    if (error.code === 'P2002') {
-      return res.status(401).json({ erro: 'Endereço de e-mail em uso'}); // unauthorized → 401
-    }
-    return res.status(401).json({ erro: 'Não foi possível criar um novo aluno'}); // unauthorized → 401
+  catch(erro){
+    next(erro);  // passa o erro para o middleware global
   }
 }
 
 // PUT /alunos/:id — atualiza um aluno existente
-export async function atualizarAluno(req, res) {
-  const { id } = req.params; // extrai o :id da URL
-  const { nome, email, senhaHash, cidade, frase, planosFuturos } = req.body; // extrai os dados
+export async function atualizarAluno(req, res, next) {
   try{
+    const { id } = req.params; // extrai o :id da URL
+    const { nome, email, senhaHash, cidade, frase, planosFuturos } = req.body; // extrai os dados
     const aluno = await prisma.aluno.update({
       where: { id: Number(id) },
       data: {
@@ -79,22 +86,22 @@ export async function atualizarAluno(req, res) {
     })
     res.json(aluno); // retorna o aluno atualizado
   }
-  catch(error){
+  catch(erro){
     return res.status(404).json({ erro: 'Aluno não encontrado' }); // null → 404
   }
 }
 
 // DELETE /alunos/:id — deleta um aluno
-export async function deletarAluno(req, res) {
-  const { id } = req.params; // extrai o :id da URL
+export async function deletarAluno(req, res, next) {
   try{
+    const { id } = req.params; // extrai o :id da URL
     await prisma.aluno.delete({
       where: { id: Number(id) } // converte string → number
     })
     res.status(204).end() // deleted → 204
   }
-  catch(error){
-    if (error.code === 'P2003') {
+  catch(erro){
+    if (erro.code === 'P2003') {
       return res.status(401).json({ erro: 'Aluno com mensagens cadastradas'}); // unauthorized → 401
     }
     return res.status(404).json({ erro: 'Aluno não encontrado' }); // null → 404
