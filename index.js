@@ -3,6 +3,7 @@ import express from 'express';                       // importa o Express
 import cors from 'cors';                             // importa a Cors
 import logger from './middlewares/logger.js';        // importa o middleware de log
 import tratarErro from './middlewares/erro.js';      // importa o middleware de erro
+import authRouter from './routes/auth.js';           // importa o router de auth
 import alunosRouter from './routes/alunos.js';       // importa o router de alunos
 import mensagensRouter from './routes/mensagens.js'; // importa o router de mensagens
 
@@ -23,10 +24,13 @@ app.get('/status', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date() });
 });
 
+// registra as rotas de autenticação com o prefixo /auth
+app.use('/auth', authRouter);
+
 // registra as rotas de alunos com prefixo /alunos
 app.use('/alunos', alunosRouter);
 
-// registra as rotas de alunos com prefixo /mensagens
+// registra as rotas de mensagens com prefixo /mensagens
 app.use('/mensagens', mensagensRouter);
 
 // Middleware de erro — SEMPRE por último, depois das rotas

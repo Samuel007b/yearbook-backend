@@ -45,28 +45,6 @@ export async function buscarAluno(req, res, next) {
   }
 }
 
-// POST /alunos — cria um novo aluno
-export async function criarAluno(req, res, next) {
-  try {
-    const { nome, email, senhaHash, cidade, frase, planosFuturos } = req.body; // extrai os dados
-    const novoAluno = await prisma.aluno.create({
-      data: {
-        nome: nome,
-        email: email,
-        senhaHash: senhaHash,
-        cidade: cidade,
-        frase: frase,
-        planosFuturos: planosFuturos,
-      },
-      select: selectSemSenha // omite senhaHash
-    });
-    res.status(201).json(novoAluno); // created → 201
-  }
-  catch(erro){
-    next(erro);  // passa o erro para o middleware global
-  }
-}
-
 // PUT /alunos/:id — atualiza um aluno existente
 export async function atualizarAluno(req, res, next) {
   try{
