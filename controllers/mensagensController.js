@@ -24,18 +24,15 @@ export async function listarMensagens(req, res, next) {
 // POST /mensagens — cria uma nova mensagem
 export async function criarMensagem(req, res, next) {
   try{
-    const { texto, imagemUrl, autorId } = req.body; // extrai os dados
+    const { texto, imagemUrl } = req.body; // extrai os dados
     if (!texto) {
       return res.status(400).json({ erro: 'O campo texto é obrigatório' }); // invalid → 400
-    }
-    if (!autorId) {
-      return res.status(400).json({ erro: 'O campo autorId é obrigatório' }); // invalid → 400
     }
     const novaMensagem = await prisma.mensagem.create({
       data: {
         texto: texto,
         imagemUrl: imagemUrl,
-        autorId: Number(autorId)
+        autorId: Number(req.aluno.id)
       },
     });
     res.status(201).json(novaMensagem); // created → 201
